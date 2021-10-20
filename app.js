@@ -1,23 +1,40 @@
-const bodyParser = require('body-parser')
-const express = require('express')
+// const http = require('http');
+const express = require('express');
+const path = require('path')
+// const bodyParser = require('body-parser')
 
-const app = express()
+const app = express();
 
-const adminRoutes = require('./routes/admin')
-const shopRoutes = require('./routes/shop')
-const errorPage = require('./routes/404')
+app.set('vue-engine', 'pug');
+app.set('views', 'views')
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(express.static('public'))
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const errorPage = require('./routes/404');
 
-app.use('/admin', adminRoutes)
-app.use(shopRoutes)
+app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')))
 
-// app.get('/', (req, res, next) => {
-//   console.log('in another middleware')
-//   res.send('<h1>Hello from Express!</h1>')
-// })
+// app.use(bodyParser.urlencoded({extended: true}));
+
+// app.use(express.json())
+
+app.use('/', (req, res, next) => {
+  console.log('This always runs')
+  next();
+})
+
+app.use('/admin', adminData.route);
+app.use(shopRoutes);
 
 app.use(errorPage)
 
-app.listen(1000)
+// app.use('/', (req, res, next) => {
+//   res.sendFile(path.join(__dirname, 'views', '404.html'))
+// })
+
+// const server = http.createServer(app);
+
+// server.listen(3000);
+
+app.listen(3000)
