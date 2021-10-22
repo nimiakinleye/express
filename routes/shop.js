@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
   console.log('shop.js', admin.products)
   const products = admin.products
   // res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'));
-  res.render('shop.pug', {prods: products, pageTitle: 'Shop', path: '/'})
+  res.render('shop', {prods: products, pageTitle: 'Shop', path: '/'})
 }) 
 
 module.exports = router;

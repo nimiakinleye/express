@@ -1,12 +1,18 @@
 // const http = require('http');
 const express = require('express');
 const path = require('path')
+const expressHbs = require('express-handlebars')
 // const bodyParser = require('body-parser')
 
 const app = express();
+// for pug
+// app.set('view engine', 'pug');
+// app.set('views', 'views')
 
-app.set('vue-engine', 'pug');
-app.set('views', 'views')
+// for handlebars
+app.engine('handlebars', expressHbs());
+app.set('view engine', 'handlebars');
+app.set('views', 'views');
 
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
